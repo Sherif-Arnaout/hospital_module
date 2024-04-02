@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_hospital_appointment">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2 style="text-align: center;">Appointment Details</h2>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr style="background-color: #f2f2f2;">
+                                                <th>Patient</th>
+                                                <th>Date</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>Status</th>
+                                                <th>Ticket Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc" t-as="appointment">
+                                                <td><span t-field="appointment.patient_id.name"/></td>
+                                                <td><span t-field="appointment.date"/></td>
+                                                <td><span t-field="appointment.start_time"/></td>
+                                                <td><span t-field="appointment.end_time"/></td>
+                                                <td>
+                                                    <span t-if="appointment.state_id == 'new'">New</span>
+                                                    <span t-elif="appointment.state_id == 'booked'">Booked</span>
+                                                    <span t-else="">Canceled</span>
+                                                </td>
+                                                <td><span t-field="appointment.ticket_cost"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

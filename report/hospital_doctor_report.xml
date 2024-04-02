@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_hospital_doctor">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2 style="text-align: center;">Doctor Information</h2>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Name:</strong></td>
+                                                <td><span t-field="doc.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Phone:</strong></td>
+                                                <td><span t-field="doc.phone"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Gender:</strong></td>
+                                                <td><span t-field="doc.gender"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Age:</strong></td>
+                                                <td><span t-field="doc.age"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Section:</strong></td>
+                                                <td><span t-field="doc.section"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <h2 style="text-align: center;">Appointment Schedule</h2>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr style="background-color: #f2f2f2;">
+                                                <th>Date</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc.appointment_ids" t-as="appointment">
+                                                <td><span t-field="appointment.date"/></td>
+                                                <td><span t-field="appointment.start_time"/></td>
+                                                <td><span t-field="appointment.end_time"/></td>
+                                                <td>
+                                                    <span t-if="appointment.is_booked == 1">Booked</span>
+                                                    <span t-else="">Available</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

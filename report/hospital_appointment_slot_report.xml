@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_hospital_appointment_slot">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2 style="text-align: center;">Appointment Slots</h2>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr style="background-color: #f2f2f2;">
+                                                <th>Doctor</th>
+                                                <th>Date</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc" t-as="slot">
+                                                <td><span t-field="slot.doctor_id.name"/></td>
+                                                <td><span t-field="slot.date"/></td>
+                                                <td><span t-field="slot.start_time"/></td>
+                                                <td><span t-field="slot.end_time"/></td>
+                                                <td>
+                                                    <span t-if="slot.is_booked == 1">Booked</span>
+                                                    <span t-else="">Available</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
