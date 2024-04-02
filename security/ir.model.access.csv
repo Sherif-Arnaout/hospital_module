@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_create,perm_write,perm_read,perm_unlink
+access_hospital_patient,hospital.patient,model_hospital_patient,base.group_user,1,1,1,1
+access_hospital_doctor,hospital.doctor,model_hospital_doctor,base.group_user,1,1,1,1
+access_doctor_section,doctor.section,model_doctor_section,base.group_user,1,1,1,1
+access_hospital_appointment,hospital.appointment,model_hospital_appointment,base.group_user,1,1,1,1
+access_hospital_appointment_slot,hospital.appointment.slot,model_hospital_appointment_slot,base.group_user,1,1,1,1
+access_hospital_control_panal_query,control.panal.query,model_control_panel_query,base.group_user,1,1,1,1
+access_hospital_control_panal_results,control.panal.results,model_control_panel_results,base.group_user,1,1,1,1
+access_message_wizard,message.wizard,model_message_wizard,base.group_user,1,1,1,1
+access_custom_auth,custom.auth,model_custom_auth,base.group_user,1,1,1,1
