@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_control_panel_query_form" model="ir.ui.view">
+            <field name="name">control.panel.query.form</field>
+            <field name="model">control.panel.query</field>
+            <field name="arch" type="xml">
+                <form string="Control Panel for Queries" class="o_form_transparent">
+                    <sheet>
+                        <group>
+                            <group name="Search by Phone">
+                                <field name="phone" widget="phone"/>
+                            </group>
+                            <group>
+                                <button name="search_for_patient" string="Search For Patient" type="object"
+                                        class="btn-primary custom_styles"/>
+                                <button name="search_for_doctor" string="Search For Doctor" type="object"
+                                        class="btn-primary custom_styles2"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <button name="open_appointment_slot" string="Available Appointment" type="object"
+                                        class="btn-primary custom_styles3"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="section" widget="many2one" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                            <group>
+                                <button name="search_for_section" string="Search For Section" type="object"
+                                        class="btn-primary custom_styles33"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="close_window" string="Close" type="object" class="btn-primary custom_styles4"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_control_panel_query" model="ir.actions.act_window">
+            <field name="name">Control Panel For Queries</field>
+            <field name="res_model">control.panel.query</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_control_panel_results_form" model="ir.ui.view">
+            <field name="name">control.panel.results.form</field>
+            <field name="model">control.panel.results</field>
+            <field name="arch" type="xml">
+                <form string="Control Panel for Results">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="age"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="section"/>
+                            <field name="notes"/>
+                            <field name="diseases"/>
+                            <field name="date"/>
+                            <field name="doctor_id"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="open_appointment" string="Booking" type="object"
+                                class="btn-primary custom_styles3" attrs="{'invisible': [('section', '!=', False)]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_control_panel_results_tree" model="ir.ui.view">
+            <field name="name">control.panel.results.tree</field>
+            <field name="model">control.panel.results</field>
+            <field name="arch" type="xml">
+                <tree string="Control Panel for Results">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="age"/>
+                    <field name="section"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_control_panel_results" model="ir.actions.act_window">
+            <field name="name">Control Panel For Results</field>
+            <field name="res_model">control.panel.results</field>
+            <field name="view_mode">form,tree</field>
+            <field name="context">{"create": false}</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

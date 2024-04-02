@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="today_appointment_template" name="Today's Appointment">
+        <div id="wrap" class="container">
+            <style>
+                .appointment-table {
+                border: 1px solid #ddd;
+                border-collapse: collapse;
+                width: 100%;
+                }
+
+                .appointment-table th,
+                .appointment-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+                }
+
+                .appointment-table th {
+                background-color: #f2f2f2;
+                }
+            </style>
+            <div style="color: black; padding: 10px; text-align: right;">
+                <p style="margin: 0;">
+                    User:
+                    <span t-esc="request.env.user.name"/>
+                </p>
+                <p>Today's Date:
+                    <span t-esc="time.strftime('%Y-%m-%d')"/>
+                </p>
+            </div>
+            <h1 style="color: green; text-align: center;">Today's Appointment</h1>
+
+            <table class="appointment-table">
+                <thead>
+                    <tr style="background-color: green; color: black; text-align: left;">
+                        <th>Doctor</th>
+                        <th>Section</th>
+                        <th>Patient</th>
+                        <th>Start time</th>
+                        <th>State</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="appointments" t-as="appointment">
+                        <t t-if="appointment.date.strftime('%Y-%m-%d') == time.strftime('%Y-%m-%d')">
+                            <td>
+                                <span t-field="appointment.doctor_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="appointment.section.name"/>
+                            </td>
+                            <td>
+                                <span t-field="appointment.patient_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="appointment.start_time"/>
+                            </td>
+                            <td>
+                                <span t-field="appointment.state_id"/>
+                            </td>
+                            <td>
+                                <span t-field="appointment.date"/>
+                            </td>
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</odoo>

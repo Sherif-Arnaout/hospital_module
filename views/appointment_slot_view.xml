@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hospital_appointment_slot_form" model="ir.ui.view">
+            <field name="name">hospital.appointment.slot.form</field>
+            <field name="model">hospital.appointment.slot</field>
+            <field name="arch" type="xml">
+                <form string="Appointment Slots" create="false" readonly="1">
+                    <sheet>
+                        <group string="Doctor Name">
+                            <field name="doctor_id"/>
+                            <field name="section"/>
+                        </group>
+                        <group string="Reservation INFO">
+                            <group>
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                            </group>
+                            <group>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="is_booked"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hospital_appointment_slot_tree" model="ir.ui.view">
+            <field name="name">hospital.appointment.slot.tree</field>
+            <field name="model">hospital.appointment.slot</field>
+            <field name="arch" type="xml">
+                <tree string="Appointment Slots" decoration-success="is_booked==0" decoration-danger="is_booked==1" create="false">
+                    <field name="name"/>
+                    <field name="doctor_id"/>
+                    <field name="date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="is_booked"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hospital_appointment_slot" model="ir.actions.act_window">
+            <field name="name">Appointment Slots</field>
+            <field name="res_model">hospital.appointment.slot</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="context">{"create": false}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create the first appointment slot
+                </p>
+            </field>
+        </record>
+
+        <record id="action_view_hospital_appointment_slot_report" model="ir.actions.act_window">
+            <field name="name">View Hospital Appointment Slot Report</field>
+            <field name="res_model">hospital.appointment.slot</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hospital_module.view_hospital_appointment_slot_tree"/>
+            <field name="context">{'default_report_type': 'pdf'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to generate the Appointment Slot Report.
+                </p>
+            </field>
+        </record>
+
+        <record id="report_action_hospital_appointment_slot" model="ir.actions.report">
+            <field name="name">Hospital Appointment Slot Report</field>
+            <field name="model">hospital.appointment.slot</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hospital_module.report_hospital_appointment_slot</field>
+            <field name="report_file">hospital_module.report_hospital_appointment_slot</field>
+        </record>
+
+    </data>
+</odoo>

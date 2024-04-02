@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="today_slot_template" name="Today's Doctors">
+        <div id="wrap" class="container">
+            <style>
+                .doctor-table {
+                border: 1px solid #ddd;
+                border-collapse: collapse;
+                width: 100%;
+                }
+
+                .doctor-table th,
+                .doctor-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+                }
+
+                .doctor-table th {
+                background-color: #f2f2f2;
+                }
+            </style>
+            <div style="color: black; padding: 10px; text-align: right;">
+                <p style="margin: 0;">
+                    User:
+                    <span t-esc="request.env.user.name"/>
+                </p>
+                <p>Today's Date:
+                    <span t-esc="time.strftime('%Y-%m-%d')"/>
+                </p>
+            </div>
+            <h1 style="color: green; text-align: center;">Today's Doctor</h1>
+
+            <table class="doctor-table">
+                <thead>
+                    <tr style="background-color: green; color: black; text-align: left;">
+                        <th>Doctor</th>
+                        <th>Section</th>
+                        <th>Date</th>
+                        <th>Start time</th>
+                        <th>Booking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="doctors" t-as="doctor">
+                        <t t-if="doctor.date.strftime('%Y-%m-%d') == time.strftime('%Y-%m-%d')">
+                            <td>
+                                <span t-field="doctor.doctor_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="doctor.section.name"/>
+                            </td>
+                            <td>
+                                <span t-field="doctor.date"/>
+                            </td>
+                            <td>
+                                <span t-field="doctor.start_time"/>
+                            </td>
+                            <td>
+                                <span t-field="doctor.is_booked"/>
+                            </td>
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</odoo>

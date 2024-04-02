@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Menu Items-->
+        <odoo>
+        <!-- Parent Menu -->
+        <menuitem id="hospital_menu" name="Hospital" sequence="10"/>
+        <!-- Child Menu -->
+        <!-- Patient Menu -->
+        <menuitem id="hospital_patient_menu" name="Patient" parent="hospital_menu"
+                  action="action_hospital_patient" sequence="30"/>
+        <!-- Doctor Menu -->
+        <menuitem id="hospital_doctor_menu" name="Doctor" parent="hospital_menu" sequence="40"/>
+        <menuitem id="hospital_doctor_child_menu" name="Doctor" parent="hospital_doctor_menu"
+                  action="action_hospital_doctor" sequence="40"/>
+        <menuitem id="doctor_section_menu" name="Doctors Section" parent="hospital_doctor_menu"
+                  action="action_doctor_section" sequence="50"/>
+        <!-- Appointment Menu -->
+        <menuitem id="hospital_appointment_menu" name="Appointment" parent="hospital_menu"
+                  />
+<!--        <menuitem id="hospital_appointment_child_menu" name="Appointment" parent="hospital_appointment_menu"-->
+<!--                  action="action_hospital_appointment" sequence="60"/>-->
+        <!-- Appointment Slot Menu -->
+        <menuitem id="hospital_appointment_slot_menu" name="Appointment Slots" parent="hospital_appointment_menu"
+                  action="action_hospital_appointment_slot" sequence="70"/>
+        <menuitem id="control_panel_query_menu" name="Control Panel" parent="hospital_menu"
+                      action="action_control_panel_query" sequence="100"/>
+
+             <record id="menu_item_id" model="ir.ui.menu">
+            <field name="name">Appointment</field>
+            <field name="action" ref="hospital_module.action_hospital_appointment"/>
+            <field name="sequence" eval="60"/>
+            <field name="active" eval="False"/>
+        </record>
+        </odoo>
+
+    </data>
+</odoo>

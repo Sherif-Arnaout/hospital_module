@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_hospital_appointment_form" model="ir.ui.view">
+            <field name="name">hospital.appointment.form</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <form string="Appointment">
+                    <header>
+                        <field name="state_id" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Patient INFO">
+                                <field name="patient_id" widget="many2one"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                                <field name="phone" widget="phone"/>
+
+                            </group>
+                            <group string="Doctor INFO">
+                                <field name="doctor_id" widget="many2one"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                                <field name="section" widget="many2one"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Reservation Slot">
+                                <field name="slot_id" domain="[('is_booked', '=', False),('doctor_id', '=', doctor_id)]"
+                                       widget="many2one"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                            <group string="Booking">
+                                <button name="confirm_booking" string="Book" type="object"
+                                        class="btn-primary custom_styles"/>
+                                <button name="cancel_booking" string="Cancel" type="object"
+                                        class="btn-primary custom_styles2"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <sheet>
+                        <group>
+                            <group string="Reservation INFO">
+                                <field name="date"/>
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="ticket_cost" widget="monetary"/>
+                                <field name="doctor_ticket_cost" widget="monetary"/>
+                            </group>
+                            <group string="Total tickets by query within the period">
+                                <field name="start_date_period"/>
+                                <field name="end_date_period"/>
+                                <field name="doctor_ticket_cost_period" widget="monetary"/>
+                            </group>
+                        </group>
+                        <button name="print_appointment" string="Print" type="object"
+                                        class="btn-primary"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hospital_appointment_tree" model="ir.ui.view">
+            <field name="name">hospital.appointment.tree</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <tree string="Appointment" decoration-success="state_id=='booked'"
+                      decoration-danger="state_id=='cancelled'"
+                      decoration-info="state_id=='new'">
+                    <field name="patient_id"/>
+                    <field name="slot_id"/>
+                    <field name="state_id"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="ticket_cost"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hospital_appointment_kanban" model="ir.ui.view">
+            <field name="name">hospital.appointment.kanban</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="doctor_id"/>
+                    <field name="patient_id"/>
+                    <field name="date" title="Date"/>
+                    <field name="state_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_record"
+                                     t-attf-class="o_kanban_record o_kanban_record_{{record.state_id}}">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_title">
+                                            <field name="doctor_id" class="o_kanban_record_title"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <field name="patient_id" class="o_kanban_record_patient_id"/>
+                                    </div>
+                                    <div>
+                                        <field name="date" class="o_kanban_record_date"/>
+                                    </div>
+                                    <div>
+                                        <field name="state_id" class="o_kanban_record_state_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record id="action_hospital_appointment" model="ir.actions.act_window">
+            <field name="name">Appointments</field>
+            <field name="res_model">hospital.appointment</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create the first appointment
+                </p>
+            </field>
+        </record>
+
+        <record id="action_view_hospital_appointment_report" model="ir.actions.act_window">
+            <field name="name">View Hospital Appointment Report</field>
+            <field name="res_model">hospital.appointment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hospital_module.view_hospital_appointment_tree"/>
+            <field name="context">{'default_report_type': 'pdf'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to generate the Appointment Report.
+                </p>
+            </field>
+        </record>
+
+        <record id="report_action_hospital_appointment" model="ir.actions.report">
+            <field name="name">Hospital Appointment Report</field>
+            <field name="model">hospital.appointment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hospital_module.report_hospital_appointment</field>
+            <field name="report_file">hospital_module.report_hospital_appointment</field>
+        </record>
+
+        <record id="action_view_hospital_appointment_analyze_report" model="ir.actions.act_window">
+            <field name="name">View Hospital Analyze Appointment Report</field>
+            <field name="res_model">hospital.appointment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hospital_module.view_hospital_appointment_tree"/>
+            <field name="context">{'default_report_type': 'pdf'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to generate the Analyze Appointment Report.
+                </p>
+            </field>
+        </record>
+
+        <record id="report_action_hospital_appointment_analyze" model="ir.actions.report">
+            <field name="name">Hospital Analyze Appointment Report</field>
+            <field name="model">hospital.appointment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hospital_module.report_hospital_appointment_analyze</field>
+            <field name="report_file">hospital_module.report_hospital_appointment_analyze</field>
+        </record>
+
+
+    </data>
+</odoo>
